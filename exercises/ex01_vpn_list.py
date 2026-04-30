@@ -12,15 +12,19 @@ tunnels = [
     {"ip": "35.10.11.12", "status": "DOWN"},
 ]
 
-def tunnels_up():
-    results = []
-    for ip['ip'], key['status'] in tunnels:
-        results.append({ip ,  key})
-    return results
-
 
 def main():
-    print(tunnels_up())
+    up = 0
+    down = 0
+    for tunnel in tunnels:
+        print(tunnel.get("ip"), tunnel.get("status"))
+        if tunnel.get("status") == "UP":
+            up += 1
+        else:
+            down += 1
+    print("--"*24)
+    print(up, "UP", down, "DOWN")
+
 
 if __name__ == "__main__":
     main()
