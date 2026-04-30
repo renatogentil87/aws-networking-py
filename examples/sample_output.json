@@ -1,0 +1,12 @@
+[
+  {
+    "route_table_id": "rtb-0abc123def456",
+    "vpc_id": "vpc-0def456abc789",
+    "routes": [
+      {"destination": "10.0.0.0/16", "target": "local", "state": "active", "origin": "CreateRouteTable"},
+      {"destination": "0.0.0.0/0", "target": "igw-0abc123", "state": "active", "origin": "CreateRoute"},
+      {"destination": "10.1.0.0/16", "target": "tgw-0abc123", "state": "active", "origin": "CreateRoute"},
+      {"destination": "10.99.0.0/16", "target": "tgw-0dead000", "state": "blackhole", "origin": "CreateRoute"}
+    ]
+  }
+]

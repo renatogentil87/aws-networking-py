@@ -1,13 +1,9 @@
-# Virtual environment
 venv/
-
-# Python
 __pycache__/
 *.pyc
-
-# IDE
 .idea/
-.vscode/
-
-# OS
-.DS_Store
+outputs/
+*.egg-info/
+dist/
+build/
+.env

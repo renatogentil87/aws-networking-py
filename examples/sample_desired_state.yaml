@@ -1,0 +1,11 @@
+# Simple example — one VPC with basic routes.
+# Copy this to config/desired_state.yaml and edit for your environment.
+
+route_tables:
+  rtb-example:
+    vpc_id: vpc-example
+    routes:
+      - destination: "10.0.0.0/16"
+        target: "local"
+      - destination: "0.0.0.0/0"
+        target: "igw-example"

@@ -1,0 +1,42 @@
+# Desired network state — define what your routes SHOULD look like.
+# The drift detector compares this against actual AWS state.
+
+route_tables:
+  # Production VPC route table
+  rtb-prod-main:
+    vpc_id: vpc-prod
+    routes:
+      - destination: "10.0.0.0/16"
+        target: "local"
+      - destination: "0.0.0.0/0"
+        target: "igw-prod"
+      - destination: "10.1.0.0/16"
+        target: "tgw-main"
+      - destination: "172.16.0.0/16"
+        target: "tgw-main"
+
+  # Dev VPC route table
+  rtb-dev-main:
+    vpc_id: vpc-dev
+    routes:
+      - destination: "10.1.0.0/16"
+        target: "local"
+      - destination: "0.0.0.0/0"
+        target: "nat-gw-dev"
+      - destination: "10.0.0.0/16"
+        target: "tgw-main"
+
+# Cloud WAN segment expectations
+cloudwan_segments:
+  hybrid:
+    expected_prefixes:
+      - "192.168.20.0/24"
+      - "192.168.30.0/24"
+      - "192.168.40.0/24"
+    dropped_prefixes:
+      - "192.168.10.0/24"
+  fullmesh:
+    expected_prefixes:
+      - "172.16.0.0/16"
+      - "172.18.0.0/16"
+      - "172.22.0.0/16"
