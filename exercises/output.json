@@ -1,0 +1,389 @@
+
+{
+  "VpnConnections": [
+    {
+      "Category": "VPN",
+      "TransitGatewayId": "tgw-0d51868a0ff863669",
+      "GatewayAssociationState": "associated",
+      "Options": {
+        "EnableAcceleration": false,
+        "StaticRoutesOnly": false,
+        "LocalIpv4NetworkCidr": "[IP_ADDRESS]",
+        "RemoteIpv4NetworkCidr": "[IP_ADDRESS]",
+        "OutsideIpAddressType": "PublicIpv4",
+        "TunnelInsideIpVersion": "ipv4",
+        "TunnelOptions": [
+          {
+            "OutsideIpAddress": "[IP_ADDRESS]",
+            "TunnelInsideCidr": "[IP_ADDRESS]",
+            "PreSharedKey": "cl2At.ZzPGS2ksZ08S.3nACEen60Z9VV",
+            "Phase1LifetimeSeconds": 28800,
+            "Phase2LifetimeSeconds": 3600,
+            "RekeyMarginTimeSeconds": 540,
+            "RekeyFuzzPercentage": 100,
+            "ReplayWindowSize": 1024,
+            "DpdTimeoutSeconds": 30,
+            "DpdTimeoutAction": "restart",
+            "Phase1EncryptionAlgorithms": [{ "Value": "AES128" }],
+            "Phase2EncryptionAlgorithms": [{ "Value": "AES128" }],
+            "Phase1IntegrityAlgorithms": [{ "Value": "SHA1" }],
+            "Phase2IntegrityAlgorithms": [{ "Value": "SHA1" }],
+            "Phase1DHGroupNumbers": [{ "Value": 14 }],
+            "Phase2DHGroupNumbers": [{ "Value": 14 }],
+            "IkeVersions": [{ "Value": "ikev1" }],
+            "StartupAction": "add",
+            "LogOptions": {
+              "CloudWatchLogOptions": {
+                "LogEnabled": false,
+                "LogGroupArn": "",
+                "LogOutputFormat": "json"
+              }
+            },
+            "EnableTunnelLifecycleControl": false
+          },
+          {
+            "OutsideIpAddress": "[IP_ADDRESS]",
+            "TunnelInsideCidr": "[IP_ADDRESS]",
+            "PreSharedKey": "gbWlJBhIj53WazQkH5WE3VksMaNJ1xRu",
+            "LogOptions": {
+              "CloudWatchLogOptions": {
+                "LogEnabled": false
+              }
+            }
+          }
+        ]
+      },
+      "Routes": [],
+      "Tags": [
+        { "Key": "Project", "Value": "Networking Project" },
+        { "Key": "Managedby", "Value": "Terraform" },
+        { "Key": "Name", "Value": "vpn to Canada TGW tgw-0d51868a0ff863669" }
+      ],
+      "VgwTelemetry": [
+        {
+          "AcceptedRouteCount": 5,
+          "LastStatusChange": "2026-04-30T04:33:36+00:00",
+          "OutsideIpAddress": "[IP_ADDRESS]",
+          "Status": "UP",
+          "StatusMessage": "5 BGP ROUTES"
+        },
+        {
+          "AcceptedRouteCount": 5,
+          "LastStatusChange": "2026-04-28T03:40:12+00:00",
+          "OutsideIpAddress": "[IP_ADDRESS]",
+          "Status": "UP",
+          "StatusMessage": "5 BGP ROUTES"
+        }
+      ],
+      "VpnConnectionId": "vpn-024e020d345ca6fef",
+      "State": "available",
+      "CustomerGatewayConfiguration": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<vpn_connection id=\"vpn-024e020d345ca6fef\">
+  <customer_gateway_id>cgw-0cdb63242d6a286b0</customer_gateway_id>
+  <vpn_gateway_id></vpn_gateway_id>
+  <vpn_connection_type>ipsec.1</vpn_connection_type>
+  <ipsec_tunnel>
+    <customer_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>[US_SOCIAL_SECURITY_NUMBER]</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </customer_gateway>
+    <vpn_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>64512</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </vpn_gateway>
+    <ike>
+      <authentication_protocol>sha1</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>28800</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>main</mode>
+      <pre_shared_key>cl2At.ZzPGS2ksZ08S.3nACEen60Z9VV</pre_shared_key>
+    </ike>
+    <ipsec>
+      <protocol>esp</protocol>
+      <authentication_protocol>hmac-sha1-96</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>3600</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>tunnel</mode>
+      <clear_df_bit>true</clear_df_bit>
+      <fragmentation_before_encryption>true</fragmentation_before_encryption>
+      <tcp_mss_adjustment>1379</tcp_mss_adjustment>
+      <dead_peer_detection>
+        <interval>10</interval>
+        <retries>3</retries>
+      </dead_peer_detection>
+    </ipsec>
+  </ipsec_tunnel>
+  <ipsec_tunnel>
+    <customer_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>[US_SOCIAL_SECURITY_NUMBER]</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </customer_gateway>
+    <vpn_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>64512</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </vpn_gateway>
+    <ike>
+      <authentication_protocol>sha1</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>28800</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>main</mode>
+      <pre_shared_key>gbWlJBhIj53WazQkH5WE3VksMaNJ1xRu</pre_shared_key>
+    </ike>
+    <ipsec>
+      <protocol>esp</protocol>
+      <authentication_protocol>hmac-sha1-96</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>3600</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>tunnel</mode>
+      <clear_df_bit>true</clear_df_bit>
+      <fragmentation_before_encryption>true</fragmentation_before_encryption>
+      <tcp_mss_adjustment>1379</tcp_mss_adjustment>
+      <dead_peer_detection>
+        <interval>10</interval>
+        <retries>3</retries>
+      </dead_peer_detection>
+    </ipsec>
+  </ipsec_tunnel>
+</vpn_connection>
+",
+      "Type": "ipsec.1",
+      "CustomerGatewayId": "cgw-0cdb63242d6a286b0"
+    },
+    {
+      "Category": "VPN",
+      "CoreNetworkArn": "arn:aws:networkmanager::223318879912:core-network/core-network-0d91631a180884713",
+      "CoreNetworkAttachmentArn": "arn:aws:networkmanager::223318879912:attachment/attachment-05f141961f5929f8b",
+      "GatewayAssociationState": "associated",
+      "Options": {
+        "EnableAcceleration": false,
+        "StaticRoutesOnly": false,
+        "LocalIpv4NetworkCidr": "[IP_ADDRESS]",
+        "RemoteIpv4NetworkCidr": "[IP_ADDRESS]",
+        "OutsideIpAddressType": "PublicIpv4",
+        "TunnelInsideIpVersion": "ipv4",
+        "TunnelOptions": [
+          {
+            "OutsideIpAddress": "[IP_ADDRESS]",
+            "TunnelInsideCidr": "[IP_ADDRESS]",
+            "PreSharedKey": "SLBYFBSElzgzclWEtTzEV5Yl.Ws2tX9f",
+            "LogOptions": {
+              "CloudWatchLogOptions": {
+                "LogEnabled": false
+              }
+            },
+            "EnableTunnelLifecycleControl": false
+          },
+          {
+            "OutsideIpAddress": "[IP_ADDRESS]",
+            "TunnelInsideCidr": "[IP_ADDRESS]",
+            "PreSharedKey": "zsTyszpu50widw5rddYSrHhxcJQmaD_G",
+            "LogOptions": {
+              "CloudWatchLogOptions": {
+                "LogEnabled": false
+              }
+            },
+            "EnableTunnelLifecycleControl": false
+          }
+        ]
+      },
+      "Routes": [],
+      "Tags": [
+        { "Key": "segment", "Value": "hybrid" },
+        { "Key": "Name", "Value": "cloudwan-vpn" }
+      ],
+      "VgwTelemetry": [
+        {
+          "AcceptedRouteCount": 5,
+          "LastStatusChange": "2026-04-27T18:40:50+00:00",
+          "OutsideIpAddress": "[IP_ADDRESS]",
+          "Status": "UP",
+          "StatusMessage": "5 BGP ROUTES"
+        },
+        {
+          "AcceptedRouteCount": 5,
+          "LastStatusChange": "2026-04-27T18:42:04+00:00",
+          "OutsideIpAddress": "[IP_ADDRESS]",
+          "Status": "UP",
+          "StatusMessage": "5 BGP ROUTES"
+        }
+      ],
+      "VpnConnectionId": "vpn-0583032be2a67f256",
+      "State": "available",
+      "CustomerGatewayConfiguration": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<vpn_connection id=\"vpn-0583032be2a67f256\">
+  <customer_gateway_id>cgw-0cdb63242d6a286b0</customer_gateway_id>
+  <vpn_gateway_id></vpn_gateway_id>
+  <vpn_connection_type>ipsec.1</vpn_connection_type>
+  <ipsec_tunnel>
+    <customer_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>[US_SOCIAL_SECURITY_NUMBER]</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </customer_gateway>
+    <vpn_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>64512</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </vpn_gateway>
+    <ike>
+      <authentication_protocol>sha1</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>28800</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>main</mode>
+      <pre_shared_key>SLBYFBSElzgzclWEtTzEV5Yl.Ws2tX9f</pre_shared_key>
+    </ike>
+    <ipsec>
+      <protocol>esp</protocol>
+      <authentication_protocol>hmac-sha1-96</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>3600</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>tunnel</mode>
+      <clear_df_bit>true</clear_df_bit>
+      <fragmentation_before_encryption>true</fragmentation_before_encryption>
+      <tcp_mss_adjustment>1379</tcp_mss_adjustment>
+      <dead_peer_detection>
+        <interval>10</interval>
+        <retries>3</retries>
+      </dead_peer_detection>
+    </ipsec>
+  </ipsec_tunnel>
+  <ipsec_tunnel>
+    <customer_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>[US_SOCIAL_SECURITY_NUMBER]</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </customer_gateway>
+    <vpn_gateway>
+      <tunnel_outside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+      </tunnel_outside_address>
+      <tunnel_inside_address>
+        <ip_address>[IP_ADDRESS]</ip_address>
+        <network_mask>[IP_ADDRESS]</network_mask>
+        <network_cidr>30</network_cidr>
+      </tunnel_inside_address>
+      <bgp>
+        <asn>64512</asn>
+        <hold_time>30</hold_time>
+      </bgp>
+    </vpn_gateway>
+    <ike>
+      <authentication_protocol>sha1</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>28800</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>main</mode>
+      <pre_shared_key>zsTyszpu50widw5rddYSrHhxcJQmaD_G</pre_shared_key>
+    </ike>
+    <ipsec>
+      <protocol>esp</protocol>
+      <authentication_protocol>hmac-sha1-96</authentication_protocol>
+      <encryption_protocol>aes-128-cbc</encryption_protocol>
+      <lifetime>3600</lifetime>
+      <perfect_forward_secrecy>group2</perfect_forward_secrecy>
+      <mode>tunnel</mode>
+      <clear_df_bit>true</clear_df_bit>
+      <fragmentation_before_encryption>true</fragmentation_before_encryption>
+      <tcp_mss_adjustment>1379</tcp_mss_adjustment>
+      <dead_peer_detection>
+        <interval>10</interval>
+        <retries>3</retries>
+      </dead_peer_detection>
+    </ipsec>
+  </ipsec_tunnel>
+</vpn_connection>
+",
+      "Type": "ipsec.1",
+      "CustomerGatewayId": "cgw-0cdb63242d6a286b0"
+    }
+  ],
+  "ResponseMetadata": {
+    "RequestId": "a7bcc9bc-0a4a-46a7-b034-370cb1cce9f7",
+    "HTTPStatusCode": 200,
+    "HTTPHeaders": {
+      "x-amzn-requestid": "a7bcc9bc-0a4a-46a7-b034-370cb1cce9f7",
+      "cache-control": "no-cache, no-store",
+      "strict-transport-security": "max-age=31536000; includeSubDomains",
+      "vary": "accept-encoding",
+      "content-type": "text/xml;charset=UTF-8",
+      "transfer-encoding": "chunked",
+      "date": "Fri, 01 May 2026 15:42:58 GMT",
+      "server": "AmazonEC2"
+    },
+    "RetryAttempts": 0
+  }
+}
+

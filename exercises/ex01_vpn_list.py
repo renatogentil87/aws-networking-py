@@ -12,19 +12,16 @@ tunnels = [
     {"ip": "35.10.11.12", "status": "DOWN"},
 ]
 
-
 def main():
     up = 0
     down = 0
     for tunnel in tunnels:
-        print(tunnel.get("ip"), tunnel.get("status"))
-        if tunnel.get("status") == "UP":
+        print(f"{tunnel['ip']} : {tunnel['status']}")
+        if tunnel['status'] == "UP":
             up += 1
         else:
             down += 1
-    print("--"*24)
-    print(up, "UP", down, "DOWN")
-
+    print(f"{up} UP", f"{down} DOWN")
 
 if __name__ == "__main__":
     main()
