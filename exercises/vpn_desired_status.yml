@@ -1,0 +1,16 @@
+vpn_connections:
+    vpn-024e020d345ca6fef:
+      expected_state: available
+      tunnels:
+        - outside_ip: 15.156.154.78
+          status: UP
+        - outside_ip: 3.97.19.34
+          status: UP
+
+    vpn-0583032be2a67f256:
+      expected_state: available
+      tunnels:
+        - outside_ip: 15.156.228.172
+          status: UP
+        - outside_ip: 16.52.246.12
+          status: UP
