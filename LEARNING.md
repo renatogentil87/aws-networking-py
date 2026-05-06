@@ -186,7 +186,7 @@ Tasks:
 
 Create `exercises/ex13_vpn_health.py`
 
-Scenario: You manage 10 VPN connections. You need a daily health report.
+Scenario: You manage 50 VPN connections. You need a daily health report.
 
 Tasks:
 - Read `outputs/vpn_status.json`
@@ -245,23 +245,6 @@ cloudwan_segments:
       - "192.168.10.0/24"
 ```
 
-### Exercise 4.2 — VPN drift detection
-
-Create `exercises/ex16_vpn_drift.py`
-
-Scenario: You expect both VPN tunnels to be UP. Check if reality matches.
-
-Tasks:
-- Read your desired state YAML
-- Fetch actual VPN status from AWS (or read from saved JSON)
-- Compare: are the tunnels in the expected state?
-- Print:
-  ```
-  vpn-0583032be2a67f256:
-    Tunnel 1: expected UP, actual UP ✅
-    Tunnel 2: expected UP, actual DOWN ❌ DRIFT
-  ```
-
 ### Exercise 4.3 — Cloud WAN route drift detection
 
 Create `exercises/ex17_cloudwan_drift.py`
@@ -297,7 +280,155 @@ Tasks:
 
 ---
 
-## Level 5 — Improving Your Code (Week 7-8)
+## Level 4B — Transit Gateway Deep Dive (Week 6-7)
+
+### Exercise 4.5 — TGW Route Table Isolation Audit
+
+Create `exercises/ex19_tgw_isolation_audit.py`
+
+Scenario: Your TGW has 4 route tables implementing network segmentation (full-mesh, shared, isolated, firewall). VPC-C (172.20.0.0/16) is in the isolated segment and must NEVER reach VPC-A, VPC-B, or the VPN directly. A junior engineer accidentally propagated VPC-A into the isolated route table. You need a script that audits route table isolation.
+
+Tasks:
+- Read `outputs/tgw_isolation_audit.json`
+- Define isolation rules:
+  - isolated RT: ONLY Shared VPC (172.22.0.0/16) and default route allowed
+  - full-mesh RT: VPC-C (172.20.0.0/16) must be blackholed or absent
+  - shared RT: must NOT have VPC-C routes
+- For each route table, check if any route violates the isolation policy
+- Print an audit report showing violations and compliant routes
+
+### Exercise 4.6 — TGW Peering Route Symmetry Checker
+
+Create `exercises/ex20_tgw_peering_symmetry.py`
+
+Scenario: You have TGW peering between ca-central-1 and eu-west-2. Peering requires STATIC routes on both sides — there's no route propagation across peering. If you add a new VPC in London but forget to add a static route on the Canada side, Canada VPCs can't reach it.
+
+Tasks:
+- Read `outputs/tgw_peering_routes.json`
+- Check symmetry: for every route pointing to peering on side A, there should be a corresponding VPC on side B that can route back
+- Detect asymmetric routes (one side can reach the other, but not vice versa)
+- Detect missing routes (a VPC exists but no peering route points to it)
+- Print a symmetry report for both directions
+
+### Exercise 4.7 — TGW Firewall Inspection Path Validator
+
+Create `exercises/ex21_tgw_firewall_path_validator.py`
+
+Scenario: Your TGW implements centralized egress inspection via a Firewall VPC (100.64.0.0/16). The traffic flow is: VPC → TGW → Firewall VPC (TGW subnet → NFW endpoint → NAT GW → IGW) → Internet. If ANY hop in this chain is misconfigured, traffic blackholes.
+
+Tasks:
+- Read `outputs/tgw_firewall_path.json`
+- For each VPC that uses the firewall for egress, trace the FULL path:
+  - VPC route table has 0.0.0.0/0 → TGW?
+  - TGW route table has 0.0.0.0/0 → firewall attachment?
+  - Firewall TGW subnet route table has 0.0.0.0/0 → NFW endpoint?
+  - Firewall public subnet has 0.0.0.0/0 → IGW?
+  - RETURN: Firewall RT in TGW has route back to VPC CIDR?
+  - Appliance mode enabled on firewall attachment?
+- Print path validation showing each hop as pass/fail
+
+### Exercise 4.8 — TGW Blackhole & Route Conflict Detector
+
+Create `exercises/ex22_tgw_blackhole_conflict_detector.py`
+
+Scenario: Blackholes can appear intentionally (isolation) or unintentionally (deleted attachment). You also have potential route conflicts: same CIDR with different next-hops, static overriding propagated, or overlapping prefixes.
+
+Tasks:
+- Read `outputs/tgw_route_conflicts.json`
+- Categorize blackholes as INTENTIONAL (matches isolation policy) or SUSPICIOUS
+- Detect route conflicts: same CIDR with different states or next-hops
+- Detect overlapping prefixes (e.g., 172.16.0.0/16 and 172.16.20.0/24)
+- Use `ipaddress` module to check subnet containment
+- Print analysis report with recommendations
+
+### Exercise 4.9 — TGW VPN Route Preference & Failover Simulation
+
+Create `exercises/ex23_tgw_vpn_failover.py`
+
+Scenario: You have two VPN connections (primary and backup). Primary has shorter AS_PATH, backup has prepended AS_PATH. Both advertise the same prefixes.
+
+Tasks:
+- Read `outputs/tgw_vpn_routes.json`
+- For each prefix, determine which VPN is ACTIVE and why (shortest AS_PATH wins)
+- Simulate failover: primary VPN goes DOWN — which routes switch to backup?
+- Detect single points of failure (prefixes only advertised by one VPN)
+- Print route preference table and failover simulation results
+
+---
+
+## Level 4C — Cloud WAN Routing Policies & Traffic Manipulation (Week 7-8)
+
+### Exercise 4.10 — CloudWAN Segment Route Verification
+
+Create `exercises/ex24_cloudwan_segment_verification.py`
+
+Scenario: Your Cloud WAN has 4 segments (isolated, fullmesh, hybrid, shared) with sharing rules: fullmesh shares with shared and hybrid, hybrid shares with shared, shared shares with isolated. You need to verify routes appear only where they should.
+
+Tasks:
+- Read `outputs/cloudwan_segments.json`
+- Based on sharing rules, calculate which prefixes SHOULD appear in each segment
+- For each segment, report EXPECTED routes that are MISSING and UNEXPECTED routes that shouldn't be there
+- Print a compliance report (e.g., 172.16.0.0/16 appearing in isolated = isolation violation)
+
+### Exercise 4.11 — CloudWAN Route Summarization Policy Builder
+
+Create `exercises/ex25_cloudwan_route_summarization.py`
+
+Scenario: Your Cloud WAN advertises individual VPC prefixes to on-prem via VPN. The on-prem router's table is bloated. You need to summarize: 172.16/18/22 → 172.16.0.0/12 (existing) and add EU prefixes: 10.10/20/40 → 10.0.0.0/8 (new).
+
+Tasks:
+- Read `outputs/cloudwan_policy_current.json`
+- Parse existing routing-policies section
+- Add a new summarization rule (rule-number 200) for EU prefixes
+- Validate that summary prefix covers all specific prefixes using `ipaddress` module
+- Write updated policy to `outputs/cloudwan_policy_updated.json`
+- Print before/after comparison
+
+### Exercise 4.12 — CloudWAN Inbound Route Filtering & Prefix List Management
+
+Create `exercises/ex26_cloudwan_inbound_filtering.py`
+
+Scenario: Your on-prem site advertises routes via VPN including dangerous ones: 172.16.0.0/16 (conflicts with VPC-A!) and 0.0.0.0/0 (could blackhole all traffic). Your current drop policy only blocks 192.168.10.0/24.
+
+Tasks:
+- Read `outputs/vpn_advertised_routes.json` and `outputs/aws_vpc_cidrs.json`
+- Detect conflicts: VPN routes that overlap with AWS VPC CIDRs
+- Detect dangerous routes: default route or supernets covering multiple VPCs
+- Generate updated prefix list of routes to DROP
+- Use `ipaddress` module for overlap/supernet detection
+- Print filtering report showing conflicts, allowed, and blocked routes
+
+### Exercise 4.13 — TGW-to-CloudWAN Migration Route Validator
+
+Create `exercises/ex27_tgw_cloudwan_migration_validator.py`
+
+Scenario: You're migrating from TGW to Cloud WAN. Before cutting over, verify that CloudWAN's segment-based routing produces the SAME reachability as your current TGW route tables.
+
+Tasks:
+- Read `outputs/tgw_route_tables.json` and `outputs/cloudwan_segments.json`
+- For each VPC, determine what it can reach via TGW vs CloudWAN
+- Report reachability gaps: equivalent, CloudWAN has more routes, or migration gap
+- Identify VPCs not yet attached to CloudWAN (e.g., Firewall VPC)
+- Suggest which segment unattached VPCs should join
+
+### Exercise 4.14 — CloudWAN Multi-Region Traffic Engineering & Policy Simulation
+
+Create `exercises/ex28_cloudwan_traffic_engineering.py`
+
+Scenario: The security team wants ALL traffic from isolated segment destined to on-prem (hybrid) to be inspected first. You need to understand segment sharing as a directed graph and trace traffic paths.
+
+Tasks:
+- Read `outputs/traffic_flows.json`
+- Build a directed graph of segment sharing relationships
+- For each traffic flow, determine the path through segments (or if it's blocked)
+- Identify flows that require inspection (isolated → external)
+- Use BFS/DFS to find paths between segments
+- Print flow analysis showing path, hops, and whether inspection is needed
+- Suggest policy changes for flows that are currently blocked but should be allowed
+
+---
+
+## Level 5 — Improving Your Code (Week 9-10)
 
 ### Exercise 5.1 — Error handling
 
@@ -328,7 +459,7 @@ logger.error("Failed to connect to AWS")
 
 ### Exercise 5.4 — Write unit tests
 
-Create `exercises/ex19_tests.py`
+Create `exercises/ex29_tests.py`
 
 Test your `find_blackholes()` function with fake data — no AWS needed:
 ```python

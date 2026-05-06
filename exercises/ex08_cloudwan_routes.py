@@ -45,12 +45,16 @@ def main():
     for dst in network_routes['NetworkRoutes']:
         for netattachment in dst['Destinations']:
             routes.append({
-                dst['DestinationCidrBlock']: netattachment.get('CoreNetworkAttachmentId'),
-                dst['State']: dst['Type']
+                "destination" : dst["DestinationCidrBlock"],
+                "attachment": netattachment.get("CoreNetworkAttachmentId"),
+                "State": dst["State"],
+                "Type": dst["Type"],
             })
 
     with open('cloudwan_routes.json', 'w') as f:
         json.dump(routes, f)
+
+    print(json.dumps(routes, indent=2))
 
 if __name__ == "__main__":
     main()

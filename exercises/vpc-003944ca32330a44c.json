@@ -1,0 +1,20 @@
+[
+    {
+        "RouteTableId": "rtb-02d4f3684d35ce0c4",
+        "Destination": "172.22.20.0/24",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-02d4f3684d35ce0c4",
+        "Destination": "172.20.0.0/16",
+        "State": "active",
+        "Target": "local"
+    },
+    {
+        "RouteTableId": "rtb-06e70a454a538d389",
+        "Destination": "172.20.0.0/16",
+        "State": "active",
+        "Target": "local"
+    }
+]

@@ -1,0 +1,21 @@
+ expected_routes:
+    # /16 routes — some exist in vpc_routes.json, some don't
+    - "10.22.0.0/16"       # exists (active in rtb-0be2dde6ac7527c22)
+    - "10.20.0.0/16"       # exists (active in rtb-0ca7f33bb91a44d00)
+    - "10.11.0.0/16"       # exists (active in rtb-0ca7f33bb91a44d00)
+    - "10.31.0.0/16"       # exists (active in rtb-0ca7f33bb91a44d00)
+    - "10.13.0.0/16"       # exists (active in rtb-0db6316a39ebfe5eb)
+    - "10.50.0.0/16"       # MISSING — does not exist
+    - "10.99.0.0/16"       # MISSING — does not exist
+    - "10.2.0.0/16"        # exists but BLACKHOLE
+    - "10.15.0.0/16"       # exists but BLACKHOLE
+
+    # /24 routes — some exist, some don't
+    - "192.168.15.0/24"    # exists (active in rtb-0be2dde6ac7527c22)
+    - "192.168.19.0/24"    # exists (active in rtb-0ca7f33bb91a44d00)
+    - "192.168.27.0/24"    # exists (active in rtb-0db6316a39ebfe5eb)
+    - "192.168.25.0/24"    # exists (active in rtb-04a8e1f2c3d567890)
+    - "192.168.99.0/24"    # MISSING — does not exist
+    - "192.168.200.0/24"   # MISSING — does not exist
+    - "192.168.7.0/24"     # exists but BLACKHOLE
+    - "192.168.18.0/24"    # exists but BLACKHOLE

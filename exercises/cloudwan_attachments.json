@@ -1,0 +1,56 @@
+[
+    {
+        "AttachmentId": "attachment-06290facdb29dac35",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "shared"
+    },
+    {
+        "AttachmentId": "attachment-0812a837ea7ee942d",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "fullmesh"
+    },
+    {
+        "AttachmentId": "attachment-0bbed5baff3ea5405",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "isolated"
+    },
+    {
+        "AttachmentId": "attachment-0e1685e586ce9e125",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "fullmesh"
+    },
+    {
+        "AttachmentId": "attachment-0c572362db6e81669",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "fullmesh"
+    },
+    {
+        "AttachmentId": "attachment-069e13cb0670d7c0f",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "shared"
+    },
+    {
+        "AttachmentId": "attachment-05f141961f5929f8b",
+        "AttachmentType": "SITE_TO_SITE_VPN",
+        "State": "AVAILABLE",
+        "Segment": "hybrid"
+    },
+    {
+        "AttachmentId": "attachment-0b1e667ad6d509687",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "isolated"
+    },
+    {
+        "AttachmentId": "attachment-01256bf2f32492550",
+        "AttachmentType": "VPC",
+        "State": "AVAILABLE",
+        "Segment": "fullmesh"
+    }
+]

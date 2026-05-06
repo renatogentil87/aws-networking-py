@@ -1,0 +1,56 @@
+[
+    {
+        "RouteTableId": "rtb-0be2dde6ac7527c22",
+        "Destination": "172.22.0.0/16",
+        "State": "active",
+        "Target": "local"
+    },
+    {
+        "RouteTableId": "rtb-0be2dde6ac7527c22",
+        "Destination": "172.31.0.0/16",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "172.16.20.0/24",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "172.18.20.0/24",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "172.20.20.0/24",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "172.22.0.0/16",
+        "State": "active",
+        "Target": "local"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "172.31.0.0/16",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "10.40.0.0/16",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    },
+    {
+        "RouteTableId": "rtb-0db6316a39ebfe5eb",
+        "Destination": "0.0.0.0/0",
+        "State": "active",
+        "Target": "tgw-0d51868a0ff863669"
+    }
+]

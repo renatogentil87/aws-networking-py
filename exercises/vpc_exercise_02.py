@@ -20,8 +20,27 @@ vpcs = [
           "VpcId": "vpc-ccc",
           "CidrBlock": "192.168.0.0/16",
           "Subnets": [
+              {"SubnetId": "subnet-3a", "CidrBlock": "192.168.1.0/24", "AvailabilityZone": "us-east-1a"},
+              {"SubnetId": "subnet-3a", "CidrBlock": "192.168.1.0/24", "AvailabilityZone": "us-east-1a"},
+              {"SubnetId": "subnet-3a", "CidrBlock": "192.168.1.0/24", "AvailabilityZone": "us-east-1a"},
               {"SubnetId": "subnet-3a", "CidrBlock": "192.168.1.0/24", "AvailabilityZone": "us-east-1a"}
           ]
       }
   ]
+"""
+  Exercise 2 — Inside: Print the subnet count per VPC.
+  Expected output:
+  vpc-aaa: 3 subnets
+  vpc-bbb: 2 subnets
+  vpc-ccc: 1 subnets
+"""
+
+def print_subnet_count():
+    for vpc in vpcs:
+        counter = 0
+        for subnet in vpc['Subnets']:
+            counter += 1
+        print(f"{vpc['VpcId']}: {counter}: subnets")
+
+print_subnet_count()
 
