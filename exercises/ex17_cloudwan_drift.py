@@ -6,31 +6,13 @@ Tasks:
 - Fetch actual Cloud WAN routes (or read from saved JSON)
 - Check: are the expected routes present? Are the blocked routes absent?
 - Print a drift report
-
-- global-network-id: global-network-007efcd46173a27a1
-- core-network-id core-network-0d91631a180884713
-- segment: hybrid
-- edge: ca-central-1
 """
 
-"""
-  DRIFT REPORT: hybrid (ca-central-1)
-  ====================================
-  EXPECTED ROUTES:
-    ✓ 192.168.20.0/24 - PRESENT
-    ✓ 192.168.30.0/24 - PRESENT
-    ✗ 172.18.0.0/16 - MISSING
-  
-  BLOCKED ROUTES:
-    ✓ 192.168.10.0/24 - CORRECTLY ABSENT
-    ✗ 10.30.0.0/16 - LEAK DETECTED (should not be here!)
-  
-  STATUS: DRIFT DETECTED
-"""
 import argparse
-
 import yaml
 import boto3
+from botocore.exceptions import ClientError
+
 
 def get_cloudwan_routes(core_network_id, segment, global_network_id, edge):
 
@@ -67,13 +49,15 @@ def print_drift_report(missing, leaked, present, segment, edge ):
 
     print(f"DRIFT REPORT: {segment}, {edge}")
     print("======" *15, end='\n' )
-    print(f"EXPECTED ROUTES:")
-    print(f"{present} - PRESENT \n")
-    print(f"LEADER ROUTES:")
-    print(f"{leaked} - LEAK \n")
-    print(f"MISSING ROUTES:")
-    print(f"{missing} - MISSING")
-
+    if len(present) !=0:
+        print(f"EXPECTED ROUTES:")
+        print(f"{present} - PRESENT \n")
+    if len(leaked) !=0:
+        print(f"LEAKED ROUTES:")
+        print(f"{leaked} - LEAK \n")
+    if len(missing) !=0:
+        print(f"MISSING ROUTES:")
+        print(f"{missing} - MISSING")
 
 def main():
     parser = argparse.ArgumentParser( description='Get CloudWAN routes')
@@ -83,12 +67,16 @@ def main():
     parser.add_argument( "--core-network-id", help='Cloud WLAN Network ID', required=True)
     args = parser.parse_args()
 
-    response = get_cloudwan_routes(args.core_network_id, args.segment, args.global_network_id, args.edge)
-    actual_routes = [r['DestinationCidrBlock'] for r in response['NetworkRoutes']]
-
-    expected_routes, should_not_have  = load_desired_state(args.segment)
-    missing, leaked, present   = compare_routes(actual_routes, expected_routes , should_not_have)
-    print_drift_report(missing, leaked, present, args.segment, args.edge)
+    try:
+        response = get_cloudwan_routes(args.core_network_id, args.segment, args.global_network_id, args.edge)
+        actual_routes = [r['DestinationCidrBlock'] for r in response['NetworkRoutes']]
+        expected_routes, should_not_have  = load_desired_state(args.segment)
+        missing, leaked, present   = compare_routes(actual_routes, expected_routes , should_not_have)
+        print_drift_report(missing, leaked, present, args.segment, args.edge)
+    except FileNotFoundError as e:
+        print(e)
+    except ClientError as e:
+        print(f"AWS Error: {e}")
 
 if __name__ == '__main__':
     main()
