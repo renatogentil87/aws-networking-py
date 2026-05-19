@@ -17,52 +17,63 @@ VPC Ids:
 """
 
 import json
+from logging import exception
+
 import boto3
 import argparse
 
-def describe_route_tables(vpc_id):
-    try:
-        client = boto3.client('ec2')
+from botocore.exceptions import ClientError
 
-        response = client.describe_route_tables(
-            Filters=[
-                {
-                    'Name': "vpc-id",
-                    'Values': [
-                        vpc_id,
-                    ]
-                }]
-        )
-        result = []
+
+class RouteTables():
+    def __init__(self, vpc_id):
+        self.result = []
+        self.client = boto3.client('ec2')
+        try:
+            self.response = self.client.describe_route_tables(
+                Filters=[
+                    {
+                        'Name': "vpc-id",
+                        'Values': [
+                            vpc_id,
+                        ]
+                    }]
+            )
+        except ClientError as e:
+            print(e.response['Error']['Message'])
+
+    def __str__(self):
+        return json.dumps(self.result, indent=4)
+
+    def routes(self, vpc_id=None):
         targets = ['TransitGatewayId', 'NatGatewayId', 'GatewayId', 'NetworkInterfaceId', 'CoreNetworkArn']
-        for route_table in response['RouteTables']:
+        for route_table in self.response['RouteTables']:
             for route in route_table['Routes']:
-                for t in targets:
-                    if t in route:
-                        result.append({
+                for target in targets:
+                    if target in route:
+                        self.result.append({
                             "RouteTableId": route_table['RouteTableId'],
                             "Destination": route.get('DestinationCidrBlock'),
                             "State": route['State'],
-                            "Target" : route[t]
+                            "Target" : route[target]
                         })
-    except Exception as e:
-        print(e)
 
-    with open(f'{vpc_id}.json', 'w') as outfile:
-        json.dump(result, outfile, indent=4)
+        with open(f'{vpc_id}.json', 'w') as outfile:
+            json.dump(self.result, outfile, indent=4)
 
-    print(json.dumps(result, indent=2))
-
-
-
+        return self.result
 
 def main():
     arg_parser = argparse.ArgumentParser(description= "Get VPC route tables")
     arg_parser.add_argument("--vpc-id", required=True, help="VPC ID")
     args = arg_parser.parse_args()
 
-    describe_route_tables(args.vpc_id)
-
+    try:
+        routetable = (RouteTables(args.vpc_id))
+        routetable.routes(args.vpc_id)
+        print(routetable)
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     main()

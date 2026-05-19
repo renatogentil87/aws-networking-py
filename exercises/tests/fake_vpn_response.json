@@ -1,0 +1,25 @@
+{
+  "VpnConnections": [
+    {
+      "VpnConnectionId": "vpn-healthy111",
+      "VgwTelemetry": [
+        {"Status": "UP"},
+        {"Status": "UP"}
+      ]
+    },
+    {
+      "VpnConnectionId": "vpn-down222",
+      "VgwTelemetry": [
+        {"Status": "DOWN"},
+        {"Status": "DOWN"}
+      ]
+    },
+    {
+      "VpnConnectionId": "vpn-degraded333",
+      "VgwTelemetry": [
+        {"Status": "UP"},
+        {"Status": "DOWN"}
+      ]
+    }
+  ]
+}

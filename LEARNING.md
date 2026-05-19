@@ -286,7 +286,9 @@ Tasks:
 
 Create `exercises/ex19_tgw_isolation_audit.py`
 
-Scenario: Your TGW has 4 route tables implementing network segmentation (full-mesh, shared, isolated, firewall). VPC-C (172.20.0.0/16) is in the isolated segment and must NEVER reach VPC-A, VPC-B, or the VPN directly. A junior engineer accidentally propagated VPC-A into the isolated route table. You need a script that audits route table isolation.
+Scenario: Your TGW has 4 route tables implementing network segmentation (full-mesh, shared, isolated, firewall). 
+VPC-C (172.20.0.0/16) is in the isolated segment and must NEVER reach VPC-A, VPC-B, or the VPN directly.
+A junior engineer accidentally propagated VPC-A into the isolated route table. You need a script that audits route table isolation.
 
 Tasks:
 - Read `outputs/tgw_isolation_audit.json`
