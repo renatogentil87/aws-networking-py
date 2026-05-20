@@ -7,34 +7,48 @@ routes = [
 ]
 
 
-# `10.0.0.0/16 → local [active]`
-def print_10_routes():
-    for route in routes:
-        print(route['destination'], "->", route['target'], route['state'])
+def get_all_routes(routes):
+    if len(routes) == 0:
+        return "No routes found"
+    else:
+        return routes
 
 
-def print_blackhole_routes():
+def get_blackhole_routes(routes):
+    result = []
     for route in routes:
         if route.get('state') == "blackhole":
-            print (f"{route['destination']} -> {route['target']} -> {route['state']}")
+            result.append(route)
+    return result
 
-def active_routes():
+
+def get_active_routes(routes):
+    result = []
     for route in routes:
         if route.get('state') == "active":
-           print(f"{route['destination']} -> {route['target']} -> {route['state']}")
+            result.append(route)
+    return result
 
-def count_blackholes():
-    blackhole = 0
-    for route in routes:
-        if route.get('state') == "blackhole":
-            blackhole += 1
 
-    print(f"Found {blackhole} blackhole routes")
-
+def count_blackholes(routes):
+    return len(get_blackhole_routes(routes))
 
 
 def main():
-    print_blackhole_routes()
+    print("All routes:")
+    for route in get_all_routes(routes):
+        print(f"  {route['destination']} → {route['target']} [{route['state']}]")
+
+    print("\nBlackhole routes:")
+    for route in get_blackhole_routes(routes):
+        print(f"  {route['destination']} → {route['target']} [{route['state']}]")
+
+    print("\nActive routes:")
+    for route in get_active_routes(routes):
+        print(f"  {route['destination']} → {route['target']} [{route['state']}]")
+
+    print(f"\nFound {count_blackholes(routes)} blackhole routes")
+
 
 if __name__ == "__main__":
     main()
